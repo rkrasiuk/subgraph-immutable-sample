@@ -1,0 +1,18 @@
+{
+  "name": "subgraph-immutable-sample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --debug --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ rkrasiuk/oasis-notifications-test"
+  },
+  "keywords": [],
+  "author": "Roman Krasiuk",
+  "license": "ISC",
+  "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.32.0",
+    "@graphprotocol/graph-ts": "^0.27.0"
+  }
+}

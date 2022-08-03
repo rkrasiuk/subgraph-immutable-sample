@@ -1,0 +1,15 @@
+type Urn @entity(immutable: true) {
+  id: Bytes!
+  collateral: BigInt!
+  debt: BigInt!
+  cdp: Cdp!
+}
+
+type Cdp @entity(immutable: true) {
+  " <cdp id> "
+  id: Bytes!
+  num: BigInt!
+  creator: Bytes!
+  owner: Bytes!
+  urn: Urn! @derivedFrom(field: "cdp")
+}

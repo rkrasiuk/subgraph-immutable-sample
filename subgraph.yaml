@@ -1,0 +1,59 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: CDPManager
+    network: mainnet
+    source:
+      address: '0x5ef30b9986345249bc32d8928b7ee64de9435e39'
+      abi: CDPManager
+      startBlock: 8928198
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Cdp
+      abis:
+        - name: CDPManager
+          file: ./abis/cdp-manager.json
+      eventHandlers:
+        - event: LogNote(indexed bytes4,indexed address,indexed bytes32,indexed bytes32,bytes)
+          topic0: '0xfcafcc6800000000000000000000000000000000000000000000000000000000'
+          handler: handleLogNote
+        - event: NewCdp(indexed address,indexed address,indexed uint256)
+          handler: handleNewCdp
+      file: ./src/cdp-manager.ts
+  - kind: ethereum/contract
+    name: Vat
+    network: mainnet
+    source:
+      address: '0x35d1b3f3d7966a1dfe207aa4514c12a259a0492b'
+      abi: Vat
+      startBlock: 8928152
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - FoldEvent
+        - FrobEvent
+        - ForkEvent
+      abis:
+        - name: Vat
+          file: ./abis/vat.json
+      eventHandlers:
+        # frob
+        - event: LogNote(indexed bytes4,indexed bytes32,indexed bytes32,indexed bytes32,bytes)
+          topic0: '0x7608870300000000000000000000000000000000000000000000000000000000'
+          handler: handleFrob
+        # fork
+        - event: LogNote(indexed bytes4,indexed bytes32,indexed bytes32,indexed bytes32,bytes)
+          topic0: '0x870c616d00000000000000000000000000000000000000000000000000000000'
+          handler: handleFork
+        # grab
+        - event: LogNote(indexed bytes4,indexed bytes32,indexed bytes32,indexed bytes32,bytes)
+          topic0: '0x7bab3f4000000000000000000000000000000000000000000000000000000000'
+          handler: handleGrab
+      file: ./src/vat.ts
